@@ -4,32 +4,42 @@ var LinkedList = function() {
   list.tail = null;
 
   list.addToTail = function(value) {
-    // find tail (make sure handling empty chain)
-    // var activeNode = list.tail;
-    //make a new node with value
     var newNode = Node(value);
-    //link the node to active node
-    // activeNode.next = newNode;    
-    //assign the node to the tail
-    // list.tail = newNode;
-    list.tail.next = newNode;
-    // if tail is not node, this wil fail
+    if (list.tail === null) {
+      list.head = newNode;
+      list.tail = newNode;
+    } else {
+      list.tail.next = newNode;
+      list.tail = list.tail.next;
+    }
+    // if tail is not node, this will fail
   };
 
   list.removeHead = function() {
-    // find head (make sure handling empty chain)
-    // assign head value to variable
-    // delete head
-    //assign list with rest
-    //assign new value to the head
-    // return old head value
+    if (list.head === null) {
+      return null;
+    } else {
+      // capture the value of head node
+      var headValue = list.head.value;
+      // capture second node
+      var secondNode = list.head.next;
+      // assign head with second node
+      list.head = secondNode;
+      // return the previous head node value
+      return headValue;
+    }
   };
 
   list.contains = function(target) {
-    // step through chain 
-    // if found value, return true
-    // otherwise return false
-
+    var node = list.head;
+    while (node !== null) {
+      if (node.value === target) {
+        return true;
+      } else {
+        node = node.next;
+      }
+    }
+    return false;
   };
 
   return list;
