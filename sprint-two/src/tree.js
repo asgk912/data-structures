@@ -26,14 +26,12 @@ treeMethods.contains = function(target) {
   var childrenContains = function(tree) {
     if (tree.value === target) {
       hasTarget = true;
-      return hasTarget;
     } 
     if (tree.children.length > 0) {
       for (let i = 0; i < tree.children.length; i++) {
-        hasTarget = childrenContains(tree.children[i]);
+        childrenContains(tree.children[i]);
       }
-    }
-    return hasTarget;  
+    } 
   };
   childrenContains(this);
   
