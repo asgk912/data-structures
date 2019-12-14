@@ -41,4 +41,33 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(true);
   });
 
+  it('should correctly detect larger nested children', function() {
+    tree.addChild(1);
+    tree.children[0].addChild(11);
+    tree.children[0].addChild(12);
+    tree.children[0].addChild(13);
+    tree.children[0].addChild(14);
+    tree.addChild(2);
+    tree.children[1].addChild(21);
+    tree.children[1].addChild(22);
+    tree.children[1].children[0].addChild(221);
+    tree.children[1].children[0].children[0].addChild(2211);
+    tree.children[1].addChild(23);
+    tree.children[1].addChild(24);
+    tree.addChild(3);
+    tree.children[2].addChild(31);
+    tree.children[2].addChild(32);
+    tree.children[2].children[0].addChild(121);
+    tree.children[2].addChild(33);
+    tree.children[2].addChild(34);
+    tree.addChild(4);
+    tree.children[3].addChild(11);
+    tree.children[3].addChild(12);
+    tree.children[3].addChild(13);
+    tree.children[3].addChild(14);
+    expect(tree.contains(121)).to.equal(true);
+    expect(tree.contains(2211)).to.equal(true);
+  });
+
+
 });

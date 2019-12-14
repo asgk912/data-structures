@@ -11,6 +11,7 @@ var Tree = function(value) {
 
 var treeMethods = {};
 
+// time complexity: O(1)
 treeMethods.addChild = function(value) {
   // Declare child "tree" with input: value
   var child = Tree(value);
@@ -18,6 +19,7 @@ treeMethods.addChild = function(value) {
   this.children.push(child);
 };
 
+// time complexity: O(n)
 treeMethods.contains = function(target) {
   // declare boolean
   var hasTarget = false;
