@@ -48,7 +48,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed and keep all data', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -56,9 +56,10 @@ describe('hashTable', function() {
       expect(hashTable.retrieve(firstName)).to.equal(lastName);
     });
     expect(hashTable._limit).to.equal(16);
+    expect(hashTable.retrieve('Steven')).to.equal('Tyler');
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed and keep all data', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -72,5 +73,26 @@ describe('hashTable', function() {
     hashTable.remove('John');
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
+    expect(hashTable.retrieve('Alan')).to.equal('Turing');
+  });
+  
+  it('should run forEach on each key value pair', function() {
+    //Make an iterator
+    var array = [];
+    var retrieveAllPairs = function(key, value) {
+      array.push([key, value]);
+    };
+    //Add values into Hash Table
+    hashTable.insert('Steven', 'Tyler');
+    hashTable.insert('George', 'Harrison');
+    //Run forEach with declared iterator
+    hashTable.forEach(retrieveAllPairs); 
+    //Create matching array
+    var expectedArray = [];
+    expectedArray.push(['Steven', 'Tyler']);
+    expectedArray.push(['George', 'Harrison']);
+
+    //Check in the result is the same as expectation
+    expect(array).to.eql(expectedArray);
   });
 });

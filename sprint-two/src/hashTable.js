@@ -36,6 +36,12 @@ HashTable.prototype.insert = function(k, v) {
   }
   this._storage.set(index, subStorage);
   // push this array into the storage array of box index
+  
+  // check to if there is too many entry
+  if (this._entries >= 0.75 * this._limit) {
+    this.resize(this._limit * 2);
+  }
+  // if too many resize
 };
 
 // time complexity: O(1) on average / O(n) at worst
@@ -60,6 +66,8 @@ HashTable.prototype.remove = function(k) {
   //access the storage of the index
   var subStorage = this._storage.get(index);
   //loop through the sub-array
+  //check if it contains k
+  //if it contains k, delete the pair
   if (subStorage !== undefined) {
     for (var i = 0; i < subStorage.length; i++) {
       if (subStorage[i][0] === k) {
@@ -69,26 +77,44 @@ HashTable.prototype.remove = function(k) {
       }
     }
   }
-  //check if it contains k
-  //if it contains k, delete the pair
+  
+  // check if we have few entries relative to size
+  // resize if it does
+  if (this._entries <= 0.25 * this._limit) {
+    var newSize = Math.max(8, Math.ceil(this._limit / 2));
+    this.resize(newSize);
+  }
 };
 
 HashTable.prototype.resize = function(newSize) {
-  // check if limit is 8 or not
-  // figure out new size of hash table
-  // create a new limited array with new size
-  var newStorage = LimitedArray(newSize);
-  // loop through all the old limited array
+  // create a new hashtable
+  var newHash = new HashTable(newSize);
+  // map old hash table to new has table
+  this.forEach(function (key, value) {
+    newHash.insert(key, value);
+  });
+  this._storage = newHash._storage;
+  this._limit = newHash._limit;
+  //   get element out old hash table
+  //   put element into new hash table
+  //   stop when we added all elements
+  // replace old hash table with new one
+};
+
+HashTable.prototype.forEach = function(iterator) {
+  // visit eah box in limited array
+  //   visit each box in substorage substorage array
+  //     run iterator on the box
+
   for (var i = 0; i < this._limit; i++) {
     var subStorage = this._storage.get(i);
-    for (var j = 0; j < subStorage.length; j++) {
-      //get a key and value  
-      
+    if (subStorage !== undefined) {
+      for (var j = 0; j < subStorage.length; j++) {
+        iterator(subStorage[j][0], subStorage[j][1]);
+      }
     }
   }
-  // for each element, set values into new limited array
-  // reset limit of the hashTable to new size
-  // reset storage of the hashTable to new limited array
+
 };
 
 /*
