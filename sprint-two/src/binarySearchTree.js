@@ -2,40 +2,73 @@ var BinarySearchTree = function(value) {
   // create the tree
   var binarySearchTree = {};
   //  value, right & left property
-  binarySearchTree.val = value;
+  binarySearchTree.value = value;
   binarySearchTree.right = null;
   binarySearchTree.left = null;
   // insert method
-  binary.insert = function(value) {
-    // check if the value is larger/smaller than the node value you are at
-    // if smaller, check if larger/smaller than the left node
-    //   if larger, insert
-    //   if smaller, recursion
-    // if larger, check if larger/smaller than the right node
-    // if larger, recursion
-    // if smaller, inser
+  binarySearchTree.insert = function(value) {
+    var treeToInsert = BinarySearchTree(value);  
+    // if value is smaller than the node value 
+    if (value < binarySearchTree.value) {
+      // if left is null, insert at the left tail
+      if (binarySearchTree.left === null) {
+        binarySearchTree.left = treeToInsert;
+        // if left is not null binarySearchTree.insert on left 
+      } else {
+        binarySearchTree.left.insert(value);
+      }
+    }
+    // if value is larger than the node value 
+    if (binarySearchTree.value < value) {
+      //   if right is null insert at the right tail
+      if (binarySearchTree.right === null) {
+        binarySearchTree.right = treeToInsert;
+        // if right is not null binsarySearchTree.insert on the right
+      } else {
+        binarySearchTree.right.insert(value);
+      }
+      
+    }
   };
   // contain method
-  binary.contain = function(value) {
-    // declare boolean with false
+  binarySearchTree.contains = function(value) {
     // check if the value found
+    if ( value === binarySearchTree.value ) {
+      return true;
+    } 
     // check if the value is smaller/larger
-    // if smaller, check  the left node
-    //   recursion on left node
-    // if larger, check the right node
-    //   recursion on the right node
-    // if children return true
+    if ( value < binarySearchTree.value) {
+      if (binarySearchTree.left === null) {
+        return false;
+      } else {
+        return binarySearchTree.left.contains(value);
+      }
+    }
+
+    if ( binarySearchTree.value < value) {
+      if (binarySearchTree.right === null) {
+        return false;
+      } else {
+        return binarySearchTree.right.contains(value);
+      }
+    }
+
   };
   // depthFirstLog();
-  binary.depthFirstLog = function(cb) {
+  binarySearchTree.depthFirstLog = function(cb) {
     // callback current node
+    cb(binarySearchTree.value);
     // if there is left node, depthFirstLog cb
+    if (binarySearchTree.left !== null) {
+      binarySearchTree.left.depthFirstLog(cb);
+    }
     // if there is right node, depthFirstLog cb 
-    // cb(binarySearchTree);
-    // if(binarySearchTree.right !== null) {
-    // }
+    if (binarySearchTree.right !== null) {
+      binarySearchTree.right.depthFirstLog(cb);
+    }
+    
   };
-
+  return binarySearchTree;
 };
 
 
