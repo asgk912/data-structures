@@ -2,7 +2,8 @@ var LinkedList = function() {
   var list = {};
   list.head = null;
   list.tail = null;
-
+  
+  // time complexity: O(1)
   list.addToTail = function(value) {
     var newNode = Node(value);
     if (list.tail === null) {
@@ -15,6 +16,7 @@ var LinkedList = function() {
     // if tail is not node, this will fail
   };
 
+  // time complexity: O(1)
   list.removeHead = function() {
     if (list.head === null) {
       return null;
@@ -24,12 +26,17 @@ var LinkedList = function() {
       // capture second node
       var secondNode = list.head.next;
       // assign head with second node
+      // if head and tail are the same, set the tail to next node too
+      if (JSON.stringify(list.head) === JSON.stringify(list.tail)) {
+        list.tail = secondNode;
+      }
       list.head = secondNode;
       // return the previous head node value
       return headValue;
     }
   };
 
+  // time complexity: O(n)
   list.contains = function(target) {
     var node = list.head;
     while (node !== null) {

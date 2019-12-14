@@ -50,6 +50,24 @@ describe('linkedList', function() {
     linkedList.removeHead();
     expect(linkedList.contains(4)).to.equal(false);
   });
+  
 
   // add more tests here to test the functionality of linkedList
+  it('should handle strings', function () {
+    linkedList.addToTail('hello');
+    linkedList.addToTail('goodbye');
+    linkedList.removeHead();
+    expect(linkedList.contains('hello')).to.equal(false);
+    expect(linkedList.contains('goodbye')).to.equal(true);
+  });
+
+  it('should return null when everything is removed', function () {
+    linkedList.addToTail(1);
+    linkedList.removeHead();
+    linkedList.removeHead();
+    expect(linkedList.head).to.equal(null);
+    expect(linkedList.tail).to.equal(null);
+  });
+  
+
 });
