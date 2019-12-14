@@ -68,4 +68,23 @@ describe('graph', function() {
     expect(graph.hasEdge(3, 5)).to.equal(true);
     expect(graph.hasEdge(5, 5)).to.equal(true);
   });
+
+  it('should allow us to delete all nodes and edges', function () {
+    graph.addNode(5);
+    graph.addNode(2);
+    graph.addEdge(5,2);
+    graph.removeNode(5);
+    graph.removeNode(2);
+    var testGraph = new Graph;
+    expect(graph).to.be.eql(testGraph);
+  });
+  it('should not allow adding of invalid edge', function () {
+    graph.addNode(3);
+    graph.addNode(5);
+    graph.addNode(2);
+    graph.addEdge(3, 5);
+    graph.removeNode(2);
+    graph.addEdge(2, 5);
+    expect(graph.hasEdge(2, 5)).to.be.equal(false);
+  });
 });
