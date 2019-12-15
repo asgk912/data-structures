@@ -37,4 +37,35 @@ describe('binarySearchTree', function() {
     binarySearchTree.depthFirstLog(func);
     expect(array).to.eql([5, 2, 3, 7]);
   });
+
+  it('should correctly classify balance type: LeftLeft', function() {
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    var balanceType = binarySearchTree.howUnbalanced();
+    expect(balanceType).to.equal('LeftLeft');
+  });
+  it('should correctly classify balance type: LeftRight', function() {
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(4);
+    var balanceType = binarySearchTree.howUnbalanced();
+    expect(balanceType).to.equal('LeftRight');
+  });
+  it('should correctly classify balance type: RightLeft', function() {
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(6);
+    var balanceType = binarySearchTree.howUnbalanced();
+    expect(balanceType).to.equal('RightLeft');
+  });
+  it('should correctly classify balance type: RightRight', function() {
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(9);
+    var balanceType = binarySearchTree.howUnbalanced();
+    expect(balanceType).to.equal('RightRight');
+  });
+  it('should correctly classify balance type: balanced', function() {
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(1);
+    var balanceType = binarySearchTree.howUnbalanced();
+    expect(balanceType).to.equal('balanced');
+  });
 });
